@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import 'bootstrap/dist/css/bootstrap.css';
 import profileImage from './perfil.png';
 import logo from './logo.png';
+import { Link } from 'react-router-dom';
 
 function ModificarTramite(){
   const [gestor, setGestor] =  useState([])
@@ -34,7 +35,7 @@ function ModificarTramite(){
     }, []);*/
   
 
-return (
+    return contextState.login ? (
 <div className="Contenedor-Mayor">
         <nav className='navbar bg-body-tertiary border-header-top'>
         <div className='container-fluid Padre'>
@@ -84,7 +85,12 @@ return (
         </div>
         <br/>
     </div>
-);
+) : (
+  <div className="Contenedor-Mayor">
+      <div className='contenedorAlerta'>
+      <p className='alerta center-name'>  Atención! No se le permite usar la pagina debido a que no ha iniciado sesión. Vaya a la página principal para hacerlo. Si quiere hacerlo, entre...  <Link to="/inicioSesion"> aquí.</Link></p>
+      </div>
+  </div>);
 
 
 }

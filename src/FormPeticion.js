@@ -1,12 +1,11 @@
 import React, { useState } from "react";
 import axios from "axios";
-import { ActionTypes, useContextState } from './contextState';
+import { useContextState } from './contextState';
 
 function FormularioSolicitud() {
   const [solicitud, setSolicitud] = useState("");
   const [solicitudEnviada, setSolicitudEnviada] = useState(false);
-  const { contextState, setContextState } = useContextState();
-
+  const { contextState } = useContextState();
 
   const handleChangeSolicitud = (e) => {
     setSolicitud(e.target.value);
@@ -16,17 +15,22 @@ function FormularioSolicitud() {
     e.preventDefault();
 
     try {
-      const response = await axios.post("http://localhost:5000/peticiones", { 
-        hearders: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-            idg: 1,
-            idc: contextState.login.id,
-            desc: e.target.peticion
-        })
-       });
+      const response = await axios.post(
+        "http://localhost:5000/peticiones",
+        {
+          idg: 1,
+          idc: contextState.login.Id,
+          desc: solicitud,
+        },
+        {
+          headers: { 
+            "Content-Type": "application/json" 
+          },
+        }
+      );
 
       if (response.status === 200) {
-        setSolicitudEnviada(true); 
+        setSolicitudEnviada(true);
       }
     } catch (error) {
       console.error("Error al enviar la solicitud:", error);

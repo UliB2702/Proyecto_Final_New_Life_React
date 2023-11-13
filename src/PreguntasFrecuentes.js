@@ -33,7 +33,6 @@ function PreguntasFrecuentes() {
                     <>
                         <div className='item border border-dark'>
                             <h3>{p.Titulo}</h3>
-
                             <hr />
                             <p>{p.Descripcion}</p>
                         </div>
@@ -70,7 +69,7 @@ function PreguntasFrecuentes() {
                         {!contextState.isLoading && contextState.login && contextState.login.FotoPerfil !== '' &&
                             <div>
                                 <img src={contextState.login.FotoPerfil} alt="Foto de perfil" className="profile-image" />
-                                <Link to="/crearCuenta">
+                                <Link to="/notificaciones">
                                     <img src={notificaciones} alt="Foto de perfil" />
                                 </Link>
                             </div>
@@ -78,7 +77,7 @@ function PreguntasFrecuentes() {
                         {!contextState.isLoading && contextState.login && contextState.login.FotoPerfil === '' &&
                             <div>
                                 <img src={profileImage} alt="Foto de perfil" className="profile-image" />
-                                <Link to="/crearCuenta">
+                                <Link to="/notificaciones">
                                     <img src={notificaciones} alt="Foto de perfil" />
                                 </Link>
                             </div>

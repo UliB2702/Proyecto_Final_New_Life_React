@@ -71,7 +71,7 @@ function EditorDeTramites() {
           {!contextState.isLoading && contextState.login &&  contextState.login.FotoPerfil !== '' &&
             <div>
               <img src={contextState.login.FotoPerfil} alt="Foto de perfil" className="profile-image" />
-              <Link to="/crearCuenta">
+              <Link to="/notificaciones">
               <img src={notificaciones} alt="Foto de perfil" />
               </Link>
             </div>
@@ -79,7 +79,7 @@ function EditorDeTramites() {
           {!contextState.isLoading && contextState.login &&  contextState.login.FotoPerfil === '' &&
             <div>
               <img src={profileImage} alt="Foto de perfil" className="profile-image" />
-              <Link to="/crearCuenta">
+              <Link to="/notificaciones">
               <img src={notificaciones} alt="Foto de perfil" />
               </Link>
             </div>
@@ -144,7 +144,7 @@ function EditorDeTramites() {
   ):(
     <div className="Contenedor-Mayor">
         <div className='contenedorAlerta'>
-            <p className='alerta'>  Atención! No se le permite usar la pagina debido a que no ha iniciado sesión. Vaya a la página principal para hacerlo.</p>
+        <p className='alerta center-name'>  Atención! No se le permite usar la pagina debido a que no ha iniciado sesión. Vaya a la página principal para hacerlo. Si quiere hacerlo, entre...  <Link to="/inicioSesion"> aquí.</Link></p>
         </div>
     </div>  )
 }

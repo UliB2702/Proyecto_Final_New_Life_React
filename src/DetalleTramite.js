@@ -17,7 +17,6 @@ function DetalleTramite() {
 
 
     useEffect(() => {
-        console.log(idTramite)
         try {
             fetch(`http://localhost:5000/tramites/detalle/${idTramite}`)
                 .then((response) => response.json())
@@ -28,9 +27,20 @@ function DetalleTramite() {
                 });
         }
         catch {
-            console.log("no se puedo hacer la busquedas")
+            console.log("no se pudo hacer la busqueda")
         }
     }, []);
+
+    function InformacionTramite(tramite) {
+        return(
+        <>
+            {console.log("tramite", tramite?.tramite[0])}
+            <h3 className='center-name'> {tramite?.tramite[0]?.Nombre}</h3>
+            <p className='center-name'> {tramite?.tramite[0]?.Descripción} </p>
+            <img className='detalleImagen' src={tramite?.tramite[0]?.Imagen} ></img>
+        </>
+        )
+    }
 
     return contextState.login ? (
         <div className="Contenedor-Mayor">
@@ -40,7 +50,7 @@ function DetalleTramite() {
                     {!contextState.isLoading && contextState.login && contextState.login.FotoPerfil !== '' &&
                         <div>
                             <img src={contextState.login.FotoPerfil} alt="Foto de perfil" className="profile-image" />
-                            <Link to="/crearCuenta">
+                            <Link to="/notificaciones">
                                 <img src={notificaciones1} alt="Foto de perfil" />
                             </Link>
                         </div>
@@ -48,7 +58,7 @@ function DetalleTramite() {
                     {!contextState.isLoading && contextState.login && contextState.login.FotoPerfil === '' &&
                         <div>
                             <img src={profileImage} alt="Foto de perfil" className="profile-image" />
-                            <Link to="/crearCuenta">
+                            <Link to="/notificaciones">
                                 <img src={notificaciones1} alt="Foto de perfil" />
                             </Link>
                         </div>
@@ -56,27 +66,24 @@ function DetalleTramite() {
                 </div>
             </nav>
 
-            {console.log(contextState.login)}
-
             {
-                !contextState.isLoading && contextState.login && tramite.IdCliente === contextState.login.Id || tramite.IdGestor === contextState.login.Id &&
+                !contextState.isLoading && contextState.login && contextState.login.Id !== tramite.IdCliente && contextState.login.Id !== tramite.IdGestor &&
+
                 <>
                     {console.log("Puede entrar")}
-                    <h3 className='center-name'>Tramite</h3>
+                    <h3 className='center-name'><u>Tramite</u></h3>
                     <br />
-                    <div className='Padre mb-3'>
-                        <h3 className='center-name'> Tienes acceso al tramite</h3>
-                    </div>
+                    {tramite !== undefined && <InformacionTramite tramite={tramite} />}
                     <br />
                 </>
             }
 
             {
-                !contextState.isLoading && contextState.login && contextState.login.Id !== tramite.IdCliente && contextState.login.Id !== tramite.IdGestor &&
+                !contextState.isLoading && contextState.login && tramite.IdCliente === contextState.login.Id || tramite.IdGestor === contextState.login.Id &&
                 <>
 
                     <div className='Padre mb-3'>
-                        <h3 className='center-name'>No puedes acceder a este tramite. Inicia sesión con otra cuenta para hacerlo</h3>
+                        <h3 className='center-name'>No puedes acceder a este tramite. Inicia sesión con otra cuenta para hacerlo. Si quiere usar otra cuente, entonces entre...  <Link to="/inicioSesion"> aquí.</Link></h3>
                     </div>
                     <br />
                 </>
@@ -87,7 +94,7 @@ function DetalleTramite() {
     ) : (
         <div className="Contenedor-Mayor">
             <div className='contenedorAlerta'>
-                <p className='alerta'>  Atención! No se le permite usar la pagina debido a que no ha iniciado sesión. Vaya a la página principal para hacerlo.</p>
+            <p className='alerta center-name'>  Atención! No se le permite usar la pagina debido a que no ha iniciado sesión. Vaya a la página principal para hacerlo. Si quiere hacerlo, entre...  <Link to="/inicioSesion"> aquí.</Link></p>
             </div>
         </div>)
 

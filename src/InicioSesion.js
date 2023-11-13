@@ -103,7 +103,7 @@ function InicioSesion() {
 
 
       </div>
-      <h6 className='center-name'>Todavia no tienes una cuenta hecha?</h6><h6 className='center-name'><Link to="/crearCuenta"><font color="lightblue">Crea una.</font> </Link></h6>
+      <h6 className='center-name'>Todavia no tienes una cuenta hecha?</h6><h6 className='center-name'><Link to="/crearCuenta">Crea una.</Link></h6>
       <br />
     </div>
   );

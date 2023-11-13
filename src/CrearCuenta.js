@@ -125,7 +125,7 @@ function CrearCuenta() {
           
     
     </div>
-    <h6 className='center-name'>¿Ya tienes un cuenta hecha?</h6><h6 className='center-name'> <Link to="/inicioSesion"><font color="lightblue">Inicia Sesion</font></Link> </h6>
+    <h6 className='center-name'>¿Ya tienes un cuenta hecha?</h6><h6 className='center-name'> <Link to="/inicioSesion">Inicia Sesion</Link> </h6>
       <br/>
     </div>
     );

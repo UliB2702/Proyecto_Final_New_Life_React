@@ -9,6 +9,7 @@ import InicioSesion from './InicioSesion.js';
 import Reseñas from './Reseñas.js';
 import DetalleTramite from './DetalleTramite.js';
 import Notificaciones from './Notificaciones.js'
+import AgregarTramite from './AgregarTramite.js';
 
 import { ContextProvider } from './contextState';
 import PreguntasFrecuentes from './PreguntasFrecuentes.js';
@@ -18,7 +19,7 @@ function App() {
     <ContextProvider>
     <BrowserRouter>
     <Routes>
-     <Route index path='/inicioSesion' element={<InicioSesion />}></Route>
+     <Route  path='/inicioSesion' index element={<InicioSesion />}></Route>
       <Route path="/editorTramites" element={<EditorDeTramites/>}></Route>
       <Route path="/crearCuenta" element={<CrearCuenta/>}></Route>
       <Route path="/gestor" element={<HubSuperior />}></Route>
@@ -27,6 +28,7 @@ function App() {
       <Route path='/resenas' element={<Reseñas/>}></Route>
       <Route path='/detalleTramite/:idTramite' element={<DetalleTramite/>}></Route>
       <Route path='/notificaciones' element={<Notificaciones/>}></Route>
+      <Route path='/agregarTramite' element={<AgregarTramite/>}/>
     </Routes>
     </BrowserRouter> 
     </ContextProvider>

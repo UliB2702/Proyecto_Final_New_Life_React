@@ -8,14 +8,16 @@ import { Link } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.css';
 import profileImage from './perfil.png';
 import { ActionTypes, useContextState } from "./contextState";
+import notificacionesLogo from './bell-fill.svg'
 
 function Notificaciones() {
     const { contextState, setContextState } = useContextState();
     const [isLoading, setIsLoading] = useState(true);
     const [notificaciones, setNotificaciones] = useState([])
     useEffect(() => {
-        if (!contextState.login.descripcion) {
-            fetch(`http://localhost:5000/notificaciones/${contextState.login.id}`)
+        console.log(contextState?.login?.Descripción)
+        if (!contextState?.login?.Descripción) {
+            fetch(`http://localhost:5000/notificaciones/${contextState?.login?.Id}`)
                 .then((response) => response.json())
                 .then((gestorJson) => {
                     console.log("gestor", gestorJson)
@@ -24,9 +26,10 @@ function Notificaciones() {
                 });
         }
         else {
-            fetch(`http://localhost:5000/peticiones/${contextState.login.id}`)
+            fetch(`http://localhost:5000/peticiones/${contextState?.login?.Id}`)
                 .then((response) => response.json())
                 .then((gestorJson) => {
+                    console.log("Son peticiones")
                     console.log("gestor", gestorJson)
                     setNotificaciones(gestorJson)
                     setContextState({ newValue: false, type: "SET_LOADING" });
@@ -35,17 +38,22 @@ function Notificaciones() {
 
     }, []);
     
-    function ListaDeNotificaciones({ notificaciones }) {
-        return (
-            notificaciones.map((n) => {
+    function ListaDeNotificaciones() {
+        console.log("Llego aqui")
+        console.log(notificaciones)
+        return notificaciones.length !== 0 ?(
+            notificaciones?.map((n) => {
                 return (
-                    <div className='item'>
-                        <h3>{n.mensaje}</h3> <br/><br/>
-                        <p>{n.descripcion}</p>
+                    <div className='item border border-dark'>
+                        <h3>{n?.Mensaje}</h3>
+                        <hr/>
+                        <p>{n?.Descripcion}</p>
                     </div>
                 )
             }
             )
+        ) : (
+            <p className='alerta center-name font-weight-bold'> No tienes ninguna notificacion</p> 
         )
 
     };
@@ -59,16 +67,16 @@ function Notificaciones() {
                         {!contextState.isLoading && contextState.login && contextState.login.FotoPerfil !== '' &&
                             <div>
                                 <img src={contextState.login.FotoPerfil} alt="Foto de perfil" className="profile-image" />
-                                <Link to="/crearCuenta">
-                                    <img src={notificaciones} alt="Foto de perfil" />
+                                <Link to="/notificaciones">
+                                    <img src={notificacionesLogo} alt="Foto de perfil" />
                                 </Link>
                             </div>
                         }
                         {!contextState.isLoading && contextState.login && contextState.login.FotoPerfil === '' &&
                             <div>
                                 <img src={profileImage} alt="Foto de perfil" className="profile-image" />
-                                <Link to="/crearCuenta">
-                                    <img src={notificaciones} alt="Foto de perfil" />
+                                <Link to="/notificaciones">
+                                    <img src={notificacionesLogo} alt="Foto de perfil" />
                                 </Link>
                             </div>
                         }
@@ -81,7 +89,7 @@ function Notificaciones() {
             <div className="gestor">
                 {
 
-                    (!isLoading && <ListaDeNotificaciones notificaciones={notificaciones} />)
+                    (notificaciones !== undefined && <ListaDeNotificaciones />)
                 }
             </div>
             <br />
@@ -89,7 +97,7 @@ function Notificaciones() {
     ) : (
         <div className="Contenedor-Mayor">
             <div className='contenedorAlerta'>
-                <p className='alerta'>  Atención! No se le permite usar la pagina debido a que no ha iniciado sesión. Vaya a la página principal para hacerlo.</p>
+                <p className='alerta center-name'>  Atención! No se le permite usar la pagina debido a que no ha iniciado sesión. Vaya a la página principal para hacerlo. Si quiere hacerlo, entre...  <Link to="/inicioSesion"> aquí.</Link></p>
             </div>
         </div>
     );

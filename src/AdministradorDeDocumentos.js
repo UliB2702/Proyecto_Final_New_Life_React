@@ -7,6 +7,7 @@ import 'bootstrap/dist/css/bootstrap.css';
 import profileImage from './perfil.png';
 import logo from './logo.png';
 import { useContextState } from "./contextState";
+import notificaciones from './bell-fill.svg'
 //import { responsivePropType } from 'react-bootstrap/esm/createUtilityClasses';
 
 
@@ -25,7 +26,7 @@ function AdministradorDeDocumentos() {
     fetch("http://localhost:5000/gestores/clientes/1")
       .then((response) => response.json())
       .then((clienteJson) => {
-        console.log("cliente", clienteJson)
+        
         setClientes(clienteJson)
         setContextState({ newValue: false, type: "SET_LOADING" });
       });
@@ -36,7 +37,6 @@ function AdministradorDeDocumentos() {
 
     if (cliente !== undefined) {
       let lista = JSON.parse(cliente.cliente)
-      console.log(lista)
       return (
         lista.map((tramite) => {
           return (
@@ -44,7 +44,6 @@ function AdministradorDeDocumentos() {
               <div className="card">
                 <img class="card-img-top" src={tramite.Imagen} alt="Imagen del tramite" />
                 <div className="card-body">
-                  {console.log(tramite)}
                   <h5 className="card-title">{tramite.Nombre}</h5>
                   <p className="card-text">{tramite.Descripción}</p>
                   <Link to={`/detalleTramite/${tramite.id}`}><button className="btn btn-primary">Ver información</button></Link> <Link to="/editorTramites"><button className="btn btn-primary">Editar trámite</button></Link>
@@ -58,18 +57,15 @@ function AdministradorDeDocumentos() {
   }
 
 
-  function ListaDeClientes2(login){
-    console.log(login.login.Id)
+  function ListaDeClientes2(login) {
     return (
       clientes.map((c) => {
         if (c.ListaTramites !== null && c.id === login.login.Id) {
-          (console.log("Entro"))
           return (
             <div>
-                  <div className='row'>
-                  {console.log("listaaaaaaa", c.ListaTramites)}
-                  <ListaTramites cliente={c.ListaTramites} />
-                  </div>
+              <div className='row'>
+                <ListaTramites cliente={c.ListaTramites} />
+              </div>
             </div>
           )
         }
@@ -79,7 +75,6 @@ function AdministradorDeDocumentos() {
   }
 
   const ListaDeClientes = () => {
-    console.log("Lista Clientes")
     return (
       clientes.map((c) => {
         if (c.ListaTramites !== null) {
@@ -89,7 +84,6 @@ function AdministradorDeDocumentos() {
               <hr className='separadorTramites'></hr>
               <div className='container'>
                 <div className='row'>
-                  {console.log("listaaaaaaa", c.ListaTramites)}
                   <ListaTramites cliente={c.ListaTramites} />
                 </div>
               </div>
@@ -109,9 +103,22 @@ function AdministradorDeDocumentos() {
       <nav className='navbar bg-body-tertiary border-header-top'>
         <div className='container-fluid Padre'>
           <img className='navbar-brand logo' src={logo} alt="New Life" width="30" height="24" />
-          <div>
-            <img src={contextState.login.FotoPerfil} alt="Foto de perfil" className="profile-image" />
-          </div>
+          {!contextState.isLoading && contextState.login && contextState.login.FotoPerfil !== '' &&
+            <div>
+              <img src={contextState.login.FotoPerfil} alt="Foto de perfil" className="profile-image" />
+              <Link to="/notificaciones">
+                <img src={notificaciones} alt="Foto de perfil" />
+              </Link>
+            </div>
+          }
+          {!contextState.isLoading && contextState.login && contextState.login.FotoPerfil === '' &&
+            <div>
+              <img src={profileImage} alt="Foto de perfil" className="profile-image" />
+              <Link to="/notificaciones">
+                <img src={notificaciones} alt="Foto de perfil" />
+              </Link>
+            </div>
+          }
         </div>
       </nav>
       {contextState.login.Descripción &&
@@ -120,7 +127,7 @@ function AdministradorDeDocumentos() {
           <div className="tramites">
             <h2> Lista de Tramites </h2>
             <hr></hr>
-            <button type="button" className='btn btn-light derecha border botonesDeAgregacion'> + Agregar Tramite </button> <br /><br />
+            <Link to="/agregarTramite"><button type="button" className='btn btn-light derecha border botonesDeAgregacion'> + Agregar Tramite </button></Link> <br /><br />
           </div>
 
           {
@@ -136,12 +143,12 @@ function AdministradorDeDocumentos() {
             <hr></hr>
           </div>
           <div>
-              <h4>Tus Tramites</h4>
-              <hr className='separadorTramites'></hr>
-              <div className='container'>
-                  <ListaDeClientes2 login={contextState.login} />
-              </div>
+            <h4>Tus Tramites</h4>
+            <hr className='separadorTramites'></hr>
+            <div className='container'>
+              <ListaDeClientes2 login={contextState.login} />
             </div>
+          </div>
         </>
       }
     </div>
@@ -150,7 +157,7 @@ function AdministradorDeDocumentos() {
   ) : (
     <div className="Contenedor-Mayor">
       <div className='contenedorAlerta'>
-        <p className='alerta'>  Atención! No se le permite usar la pagina debido a que no ha iniciado sesión. Vaya a la página principal para hacerlo.</p>
+      <p className='alerta center-name'>  Atención! No se le permite usar la pagina debido a que no ha iniciado sesión. Vaya a la página principal para hacerlo. Si quiere hacerlo, entre...  <Link to="/inicioSesion"> aquí.</Link></p>
       </div>
     </div>
   );

@@ -53,7 +53,7 @@ function HubSuperior() {
           {!contextState.isLoading && contextState.login &&  contextState.login.FotoPerfil !== '' &&
             <div>
               <img src={contextState.login.FotoPerfil} alt="Foto de perfil" className="profile-image" />
-              <Link to="/crearCuenta">
+              <Link to="/notificaciones">
               <img src={notificaciones} alt="Foto de perfil" />
               </Link>
             </div>
@@ -61,7 +61,7 @@ function HubSuperior() {
           {!contextState.isLoading && contextState.login &&  contextState.login.FotoPerfil === '' &&
             <div>
               <img src={profileImage} alt="Foto de perfil" className="profile-image" />
-              <Link to="/crearCuenta">
+              <Link to="/notificaciones">
               <img src={notificaciones} alt="Foto de perfil" />
               </Link>
             </div>
@@ -100,7 +100,7 @@ function HubSuperior() {
       <br />
       {contextState.login && !contextState.login.Descripción &&
       <>
-      <h3 className='center-name'><u>Peticion:</u></h3>
+      <h3 className='center-name'><u>Deja tu peticion aqui:</u></h3>
       <div className='Padre mb-3'>
         <FormularioSolicitud /> 
       </div>

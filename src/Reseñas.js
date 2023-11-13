@@ -13,6 +13,7 @@ import dosestrellas from './2estrellas.png';
 import tresestrellas from './3estrellas.png';
 import cuatroestrellas from './4estrellas.png';
 import cincoestrellas from './5estrellas.png';
+import notificaciones from './bell-fill.svg'
 
 
 
@@ -100,11 +101,17 @@ function Reseñas() {
                         {!contextState.isLoading && contextState.login && contextState.login.FotoPerfil !== '' &&
                             <div>
                                 <img src={contextState.login.FotoPerfil} alt="Foto de perfil" className="profile-image" />
+                                <Link to="/notificaciones">
+                                    <img src={notificaciones} alt="Foto de perfil" />
+                                </Link>
                             </div>
                         }
                         {!contextState.isLoading && contextState.login && contextState.login.FotoPerfil === '' &&
                             <div>
                                 <img src={profileImage} alt="Foto de perfil" className="profile-image" />
+                                <Link to="/notificaciones">
+                                    <img src={notificaciones} alt="Foto de perfil" />
+                                </Link>
                             </div>
                         }
                     </div>
