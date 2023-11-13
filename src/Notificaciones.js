@@ -14,22 +14,35 @@ function Notificaciones() {
     const [isLoading, setIsLoading] = useState(true);
     const [notificaciones, setNotificaciones] = useState([])
     useEffect(() => {
-        fetch(`http://localhost:5000/notificaciones/${contextState.login.id}`)
-            .then((response) => response.json())
-            .then((gestorJson) => {
-                console.log("gestor", gestorJson)
-                setNotificaciones(gestorJson)
-                setContextState({ newValue: false, type: "SET_LOADING" });
-            });
-    }, []);
+        if (!contextState.login.descripcion) {
+            fetch(`http://localhost:5000/notificaciones/${contextState.login.id}`)
+                .then((response) => response.json())
+                .then((gestorJson) => {
+                    console.log("gestor", gestorJson)
+                    setNotificaciones(gestorJson)
+                    setContextState({ newValue: false, type: "SET_LOADING" });
+                });
+        }
+        else {
+            fetch(`http://localhost:5000/peticiones/${contextState.login.id}`)
+                .then((response) => response.json())
+                .then((gestorJson) => {
+                    console.log("gestor", gestorJson)
+                    setNotificaciones(gestorJson)
+                    setContextState({ newValue: false, type: "SET_LOADING" });
+                })
+        }
 
+    }, []);
+    
     function ListaDeNotificaciones({ notificaciones }) {
         return (
             notificaciones.map((n) => {
-                return(
-                <div className='item'>
-                    <p>{n.descripcion}</p>
-                </div>
+                return (
+                    <div className='item'>
+                        <h3>{n.mensaje}</h3> <br/><br/>
+                        <p>{n.descripcion}</p>
+                    </div>
                 )
             }
             )
@@ -43,28 +56,21 @@ function Notificaciones() {
                 <div className='container-fluid Padre'>
                     <img className='navbar-brand logo' src={logo} alt="New Life" width="30" height="24" />
                     <div>
-                        {!isLoading && !contextState.login === undefined &&
-                            <>
-                                <ul className='arreglarbotones'>
-                                    <Link to="/crearCuenta"><li className="nav-item border">
-                                        <a className='nav-link active' aria-current="page" href="sdfs.html">Iniciar sesión</a>
-                                    </li></Link>
-                                    <Link to="/inicioSesion">
-                                        <li className="nav-item border">
-                                            <a className='nav-link active' aria-current="page" href="sdfsdf.html">Registrarse</a>
-                                        </li></Link>
-                                </ul>
-                                <div>
-                                    <img src={profileImage} alt="Foto de perfil" className="profile-image" />
-                                </div>
-                            </>
+                        {!contextState.isLoading && contextState.login && contextState.login.FotoPerfil !== '' &&
+                            <div>
+                                <img src={contextState.login.FotoPerfil} alt="Foto de perfil" className="profile-image" />
+                                <Link to="/crearCuenta">
+                                    <img src={notificaciones} alt="Foto de perfil" />
+                                </Link>
+                            </div>
                         }
-                        {!isLoading && contextState.login &&
-                            <>
-                                <div>
-                                    <img src={contextState.login.FotoPerfil} alt="Imagen de gestor" className="gestor-image" />
-                                </div>
-                            </>
+                        {!contextState.isLoading && contextState.login && contextState.login.FotoPerfil === '' &&
+                            <div>
+                                <img src={profileImage} alt="Foto de perfil" className="profile-image" />
+                                <Link to="/crearCuenta">
+                                    <img src={notificaciones} alt="Foto de perfil" />
+                                </Link>
+                            </div>
                         }
                     </div>
                 </div>
@@ -85,7 +91,7 @@ function Notificaciones() {
             <div className='contenedorAlerta'>
                 <p className='alerta'>  Atención! No se le permite usar la pagina debido a que no ha iniciado sesión. Vaya a la página principal para hacerlo.</p>
             </div>
-        </div>  
+        </div>
     );
 
 }

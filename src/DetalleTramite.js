@@ -6,6 +6,7 @@ import profileImage from './perfil.png';
 import logo from './logo.png';
 import { useContextState } from "./contextState";
 import { Link, useParams } from 'react-router-dom';
+import notificaciones1 from './bell-fill.svg'
 
 function DetalleTramite() {
     const { contextState, setContextState } = useContextState();
@@ -17,16 +18,16 @@ function DetalleTramite() {
 
     useEffect(() => {
         console.log(idTramite)
-        try{
-        fetch(`http://localhost:5000/tramites/detalle/${idTramite}`)
-            .then((response) => response.json())
-            .then((clienteJson) => {
-                console.log("cliente", clienteJson)
-                setTramite(clienteJson)
-                setContextState({ newValue: false, type: "SET_LOADING" });
-            });
+        try {
+            fetch(`http://localhost:5000/tramites/detalle/${idTramite}`)
+                .then((response) => response.json())
+                .then((clienteJson) => {
+                    console.log("cliente", clienteJson)
+                    setTramite(clienteJson)
+                    setContextState({ newValue: false, type: "SET_LOADING" });
+                });
         }
-        catch{
+        catch {
             console.log("no se puedo hacer la busquedas")
         }
     }, []);
@@ -39,16 +40,22 @@ function DetalleTramite() {
                     {!contextState.isLoading && contextState.login && contextState.login.FotoPerfil !== '' &&
                         <div>
                             <img src={contextState.login.FotoPerfil} alt="Foto de perfil" className="profile-image" />
+                            <Link to="/crearCuenta">
+                                <img src={notificaciones1} alt="Foto de perfil" />
+                            </Link>
                         </div>
                     }
                     {!contextState.isLoading && contextState.login && contextState.login.FotoPerfil === '' &&
                         <div>
                             <img src={profileImage} alt="Foto de perfil" className="profile-image" />
+                            <Link to="/crearCuenta">
+                                <img src={notificaciones1} alt="Foto de perfil" />
+                            </Link>
                         </div>
                     }
                 </div>
             </nav>
-            
+
             {console.log(contextState.login)}
 
             {
@@ -58,7 +65,7 @@ function DetalleTramite() {
                     <h3 className='center-name'>Tramite</h3>
                     <br />
                     <div className='Padre mb-3'>
-                    <h3 className='center-name'> Tienes acceso al tramite</h3>
+                        <h3 className='center-name'> Tienes acceso al tramite</h3>
                     </div>
                     <br />
                 </>

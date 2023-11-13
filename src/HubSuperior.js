@@ -6,6 +6,7 @@ import 'bootstrap/dist/css/bootstrap.css';
 import profileImage from './perfil.png';
 import logo from './logo.png';
 import edificio from './building.svg';
+import notificaciones from './bell-fill.svg'
 import pregunta from './question-square-fill.svg';
 import reseñas from './pencil-square.svg';
 import { useContextState } from "./contextState";
@@ -52,11 +53,17 @@ function HubSuperior() {
           {!contextState.isLoading && contextState.login &&  contextState.login.FotoPerfil !== '' &&
             <div>
               <img src={contextState.login.FotoPerfil} alt="Foto de perfil" className="profile-image" />
+              <Link to="/crearCuenta">
+              <img src={notificaciones} alt="Foto de perfil" />
+              </Link>
             </div>
           }
           {!contextState.isLoading && contextState.login &&  contextState.login.FotoPerfil === '' &&
             <div>
               <img src={profileImage} alt="Foto de perfil" className="profile-image" />
+              <Link to="/crearCuenta">
+              <img src={notificaciones} alt="Foto de perfil" />
+              </Link>
             </div>
           }
         </div>

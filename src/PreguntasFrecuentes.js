@@ -8,6 +8,7 @@ import { Link } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.css';
 import profileImage from './perfil.png';
 import { useContextState } from "./contextState";
+import notificaciones from './bell-fill.svg'
 
 function PreguntasFrecuentes() {
     const { contextState, setContextState } = useContextState();
@@ -30,13 +31,13 @@ function PreguntasFrecuentes() {
             preguntas2.map((p) => {
                 return (
                     <>
-                    <div className='item border border-dark'>
-                        <h3>{p.Titulo}</h3>
-                       
-                        <hr />
-                        <p>{p.Descripcion}</p>
-                    </div>
-                    <br/>
+                        <div className='item border border-dark'>
+                            <h3>{p.Titulo}</h3>
+
+                            <hr />
+                            <p>{p.Descripcion}</p>
+                        </div>
+                        <br />
                     </>
                 )
             })
@@ -69,11 +70,17 @@ function PreguntasFrecuentes() {
                         {!contextState.isLoading && contextState.login && contextState.login.FotoPerfil !== '' &&
                             <div>
                                 <img src={contextState.login.FotoPerfil} alt="Foto de perfil" className="profile-image" />
+                                <Link to="/crearCuenta">
+                                    <img src={notificaciones} alt="Foto de perfil" />
+                                </Link>
                             </div>
                         }
                         {!contextState.isLoading && contextState.login && contextState.login.FotoPerfil === '' &&
                             <div>
                                 <img src={profileImage} alt="Foto de perfil" className="profile-image" />
+                                <Link to="/crearCuenta">
+                                    <img src={notificaciones} alt="Foto de perfil" />
+                                </Link>
                             </div>
                         }
                     </div>
@@ -84,7 +91,7 @@ function PreguntasFrecuentes() {
 
             <div className="gestor">
                 {
-                    (preguntas !== undefined && <ListaDePreguntas preguntas1={preguntas}/>)
+                    (preguntas !== undefined && <ListaDePreguntas preguntas1={preguntas} />)
                 }
             </div>
             <br />

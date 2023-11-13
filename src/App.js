@@ -8,6 +8,7 @@ import HubSuperior from './HubSuperior.js';
 import InicioSesion from './InicioSesion.js';
 import Reseñas from './Reseñas.js';
 import DetalleTramite from './DetalleTramite.js';
+import Notificaciones from './Notificaciones.js'
 
 import { ContextProvider } from './contextState';
 import PreguntasFrecuentes from './PreguntasFrecuentes.js';
@@ -25,6 +26,7 @@ function App() {
       <Route path='/preguntas' element={<PreguntasFrecuentes/>}></Route>
       <Route path='/resenas' element={<Reseñas/>}></Route>
       <Route path='/detalleTramite/:idTramite' element={<DetalleTramite/>}></Route>
+      <Route path='/notificaciones' element={<Notificaciones/>}></Route>
     </Routes>
     </BrowserRouter> 
     </ContextProvider>
