@@ -46,7 +46,7 @@ function AdministradorDeDocumentos() {
                 <div className="card-body">
                   <h5 className="card-title">{tramite.Nombre}</h5>
                   <p className="card-text">{tramite.Descripción}</p>
-                  <Link to={`/detalleTramite/${tramite.id}`}><button className="btn btn-primary">Ver información</button></Link> <Link to="/editorTramites"><button className="btn btn-primary">Editar trámite</button></Link>
+                  <Link to={`/detalleTramite/${tramite.id}`}><button className="btn btn-primary">Ver información</button></Link> <Link to={`/editorTramites/${tramite.id}`}><button className="btn btn-primary">Editar trámite</button></Link>
                 </div>
               </div>
             </div>

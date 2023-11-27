@@ -1,7 +1,7 @@
 
 import AdministradorDeDocumentos from './AdministradorDeDocumentos.js';
 import './App.css';
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import EditorDeTramites from './EditorDeTramites'
 import CrearCuenta from './CrearCuenta';
 import HubSuperior from './HubSuperior.js';
@@ -10,7 +10,8 @@ import Reseñas from './Reseñas.js';
 import DetalleTramite from './DetalleTramite.js';
 import Notificaciones from './Notificaciones.js'
 import AgregarTramite from './AgregarTramite.js';
-
+import NoEncontrado from './NoEncontrado.js';
+import 'bootstrap/dist/css/bootstrap.css';
 import { ContextProvider } from './contextState';
 import PreguntasFrecuentes from './PreguntasFrecuentes.js';
 
@@ -18,9 +19,10 @@ function App() {
   return (
     <ContextProvider>
     <BrowserRouter>
-    <Routes>
-     <Route  path='/inicioSesion' index element={<InicioSesion />}></Route>
-      <Route path="/editorTramites" element={<EditorDeTramites/>}></Route>
+    <Routes>  
+      <Route  path='/inicioSesion' index element={<InicioSesion />}></Route>
+      <Route path='/' element={<Navigate to='inicioSesion'/>}/>
+      <Route path="/editorTramites/:idTramite" element={<EditorDeTramites/>}></Route>
       <Route path="/crearCuenta" element={<CrearCuenta/>}></Route>
       <Route path="/gestor" element={<HubSuperior />}></Route>
       <Route path="/tramite" element={<AdministradorDeDocumentos />}></Route>
@@ -29,6 +31,7 @@ function App() {
       <Route path='/detalleTramite/:idTramite' element={<DetalleTramite/>}></Route>
       <Route path='/notificaciones' element={<Notificaciones/>}></Route>
       <Route path='/agregarTramite' element={<AgregarTramite/>}/>
+      <Route path='*' component={<NoEncontrado/>} />
     </Routes>
     </BrowserRouter> 
     </ContextProvider>
